@@ -1,53 +1,44 @@
+:root {
+    --text-shadow-hover: 0 0 1px, 0 0 3px;
+}
+
 .head {
     overflow: auto;
     font-size: large;
 }
 
 .intro {
-    text-shadow: 0 0 3px #CCCCCC, 0 0 3px #BBBBBB;
+    text-shadow: var(--text-shadow-hover) #ccc;
 }
 
-.github a, .linkedin a, .spotify a , .mail a{
+.github a, .linkedin a, .spotify a, .mail a {
     text-decoration: none;
-    color: #AAAAAA;
+    color: #aaa;
 }
 
-.github a:hover {
-    color: #6E5494;
-    text-shadow: 0 0 1px #6E5494, 0 0 3px #6E5494;
+.github a:hover, a.github:visited,
+.linkedin a:hover, a.linkedin:visited,
+.spotify a:hover, a.spotify:visited,
+.mail a:hover, a.mail:visited {
+    text-shadow: var(--text-shadow-hover);
 }
 
-a.github:visited {
-    color: #6E5494;
-    text-shadow: 0 0 1px #6E5494, 0 0 3px #6E5494;
+.github a:hover, a.github:visited {
+    color: #6e5494;
 }
 
-.linkedin a:hover {
-    color: #0077B5;
-    text-shadow: 0 0 1px #0077B5, 0 0 3px #0077B5;
+.linkedin a:hover, a.linkedin:visited {
+    color: #0077b5;
 }
 
-a.linkedin:visited {
-    color: #0077B5;
-    text-shadow: 0 0 1px #0077B5, 0 0 3px #0077B5;
-}
-
-.spotify a:hover {
-    color: #1ED760;
-    text-shadow: 0 0 1px #1ED760, 0 0 3px #1ED760;
-}
-
-a.spotify:visited {
-    color: #1ED760;
-    text-shadow: 0 0 1px #1ED760, 0 0 3px #1ED760;
+.spotify a:hover, a.spotify:visited {
+    color: #1ed760;
 }
 
 .mail a:hover {
     color: #54daff;
-    text-shadow: 0 0 1px #54daff, 0 0 3px #54daff;
 }
 
 a.mail:visited {
     color: #0078d4;
-    text-shadow: 0 0 1px #54daff, 0 0 3px #54daff;
 }
