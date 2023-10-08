@@ -5,19 +5,25 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 )
 
-func exchange_accessToken(code string) (string, string, error) {
+var (
+	clientID     = "ba45f5ea0ffd4ce59ea1a63dc43baf0d"
+	clientSecret = "6c6a3b06bccf449a89fe23e3a5495b80"
+	redirectURI  = "http://localhost:8080/callback"
+	refreshToken string
+)
+
+func ExchangeAccessToken(code string) (string, string, error) {
 	tokenURL := "https://accounts.spotify.com/api/token"
 
 	data := url.Values{}
 	data.Set("grant_type", "authorization_code")
 	data.Set("code", code)
-	data.Set("redirect_uri", os.Getenv("redirectURI"))
-	data.Set("client_id", os.Getenv("clientID"))
-	data.Set("client_secret", os.Getenv("clientSecret"))
+	data.Set("redirect_uri", redirectURI)
+	data.Set("client_id", clientID)
+	data.Set("client_secret", clientSecret)
 
 	response, err := http.NewRequest("POST", tokenURL, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -49,13 +55,13 @@ func exchange_accessToken(code string) (string, string, error) {
 	fmt.Println("Received Refresh Token: ", tokenResponse.RefreshToken)
 	return tokenResponse.AccessToken, tokenResponse.RefreshToken, nil
 }
-func refresh_accessToken(refreshToken string) (string, string, error) {
+func RefreshAccessToken(refreshToken string) (string, string, error) {
 	tokenURL := "https://accounts.spotify.com/api/token"
 	data := url.Values{}
 	data.Set("grant_type", "refresh_token")
 	data.Set("refresh_token", refreshToken)
-	data.Set("client_id", os.Getenv("clientID"))
-	data.Set("client_secret", os.Getenv("clientSecret"))
+	data.Set("client_id", clientID)
+	data.Set("client_secret", clientSecret)
 
 	req, err := http.NewRequest("POST", tokenURL, strings.NewReader(data.Encode()))
 	if err != nil {
