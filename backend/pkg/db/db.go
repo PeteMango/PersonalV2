@@ -35,7 +35,7 @@ func InitializeMongo() *mongo.Client {
 	return client
 }
 
-func InsertSongs(collection *mongo.Collection, songName string, songArtist string) (*mongo.InsertOneResult, error) {
+func InsertSongs(collection *mongo.Collection, songName string, songArtist string, songLink string) (*mongo.InsertOneResult, error) {
 	previousSong, err := FetchMostRecentSong(collection)
 	fmt.Printf("THE PREVIOUS SONG IS: %s ---- %s", previousSong["song"], previousSong["artist"])
 
@@ -51,6 +51,7 @@ func InsertSongs(collection *mongo.Collection, songName string, songArtist strin
 	doc := bson.M{
 		"song":   songName,
 		"artist": songArtist,
+		"link":   songLink,
 	}
 
 	result, err := collection.InsertOne(context.Background(), doc)

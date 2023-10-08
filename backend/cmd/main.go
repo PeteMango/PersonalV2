@@ -73,13 +73,13 @@ func main() {
 			refreshToken = newRefreshToken
 			fmt.Printf("THE REFRESH TOKEN IS %s\n", refreshToken)
 
-			err = db.UpsertTokens(tokenColl, accessToken, refreshToken, time.Now().Add(5*time.Minute))
+			err = db.UpsertTokens(tokenColl, accessToken, refreshToken, time.Now().Add(1*time.Hour))
 			if err != nil {
 				log.Printf("Failed to upsert tokens: %v", err)
 			}
 		}
 
-		songName, songArtist, err := playing.GetCurrentlyPlayingSong(accessToken)
+		songName, songArtist, songLink, err := playing.GetCurrentlyPlayingSong(accessToken)
 		if err != nil {
 			fmt.Printf("THE ERROR IS: %s", err)
 			c.String(http.StatusInternalServerError, "Error fetching currently playing song")
@@ -87,16 +87,17 @@ func main() {
 			return
 		}
 
-		result, err := db.InsertSongs(coll, songName, songArtist)
+		result, err := db.InsertSongs(coll, songName, songArtist, songLink)
 		if err != nil {
 			log.Fatalf("Failed to insert document: %v", err)
 		}
 
-		fmt.Println("Inserted document with ID:", result.InsertedID)
+		fmt.Println(result)
 
 		c.JSON(http.StatusOK, gin.H{
 			"songName":   songName,
 			"songArtist": songArtist,
+			"songLink":   songLink,
 		})
 	})
 
@@ -111,6 +112,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{
 			"songName":   result["song"],
 			"songArtist": result["artist"],
+			"songLink":   result["link"],
 		})
 	})
 	r.Run(":8080")

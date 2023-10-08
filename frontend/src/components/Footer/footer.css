@@ -1,3 +1,10 @@
-span.highlight {
+span.song a {
+    color: #1ED760;
     text-shadow: var(--text-shadow) #CCC, var(--text-shadow) #BBB;
+    text-decoration: none;
+}
+
+.song a:hover {
+    color: #1ED760;
+    text-decoration: var(--hover-text-decoration);
 }

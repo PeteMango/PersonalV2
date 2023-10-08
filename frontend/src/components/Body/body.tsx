@@ -45,7 +45,7 @@ function Body() {
               <span className="highlight">systems software developer</span>{" "}
               intern @{" "}
               <span className="blackberry">
-                <a href="https://blackberry.certicom.com/en" target="_blank">
+                <a href="https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.security.system/topic/manual/qcrypto.html" target="_blank">
                   Blackberry
                 </a>
               </span>

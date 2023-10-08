@@ -3,58 +3,68 @@ package playing
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
-func GetCurrentlyPlayingSong(accessToken string) (string, string, error) {
+func GetCurrentlyPlayingSong(accessToken string) (string, string, string, error) {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", "https://api.spotify.com/v1/me/player/currently-playing", nil)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 
 	req.Header.Set("Authorization", "Bearer "+accessToken)
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		bodyBytes, _ := ioutil.ReadAll(resp.Body)
-		return "", "", errors.New(string(bodyBytes))
+		return "", "", "", errors.New(string(bodyBytes))
 	}
 
 	var responseMap map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&responseMap); err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 
 	itemMap, ok := responseMap["item"].(map[string]interface{})
 	if !ok {
-		return "", "", errors.New("Unable to decode currently playing song data")
+		return "", "", "", errors.New("Unable to decode currently playing song data")
 	}
 
 	name, ok := itemMap["name"].(string)
 	if !ok {
-		return "", "", errors.New("Unable to extract song name from the data")
+		return "", "", "", errors.New("Unable to extract song name from the data")
 	}
 
 	artists, ok := itemMap["artists"].([]interface{})
 	if !ok || len(artists) == 0 {
-		return "", "", errors.New("Unable to extract artist data from the response")
+		return "", "", "", errors.New("Unable to extract artist data from the response")
 	}
 
 	artistMap, ok := artists[0].(map[string]interface{})
 	if !ok {
-		return "", "", errors.New("Unable to decode artist data")
+		return "", "", "", errors.New("Unable to decode artist data")
 	}
 
 	artistName, ok := artistMap["name"].(string)
 	if !ok {
-		return "", "", errors.New("Unable to extract artist name from the data")
+		return "", "", "", errors.New("Unable to extract artist name from the data")
 	}
 
-	return name, artistName, nil
+	// Extract the song URI (link)
+	uri, ok := itemMap["uri"].(string)
+	if !ok {
+		return "", "", "", errors.New("Unable to extract song URI from the data")
+	}
+
+	// Create a Spotify song link based on the URI
+	link := fmt.Sprintf("https://open.spotify.com/track/%s", uri[14:])
+
+	return name, artistName, link, nil
 }

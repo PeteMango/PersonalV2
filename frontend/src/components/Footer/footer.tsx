@@ -1,26 +1,26 @@
-// src/components/RecentSong.tsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import './footer.css'
 
 interface RecentSongData {
   songName: string;
   songArtist: string;
+  songLink: string;
 }
 
 function RecentSong() {
-  const [recentSong, setRecentSong] = useState<RecentSongData>({ songName: '', songArtist: '' });
+  const [recentSong, setRecentSong] = useState<RecentSongData | null>(null);
 
   useEffect(() => {
     const fetchRecentSong = async () => {
       try {
-        const response = await fetch('http://localhost:8080/recentSong'); // Replace with your Gin backend URL
+        const response = await fetch("http://localhost:8080/recentSong"); // Replace with your Gin backend URL
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data: RecentSongData = await response.json();
         setRecentSong(data);
       } catch (error) {
-        console.error('Error fetching recent song:', error);
+        console.error("Error fetching recent song:", error);
       }
     };
 
@@ -29,9 +29,16 @@ function RecentSong() {
 
   return (
     <div>
-      Currently listening to: {" "} 
-      <span className='highlight'>{recentSong.songName}</span> by {" "}
-      <span className='highlight'>{recentSong.songArtist}</span> 
+      {recentSong ? (
+        <div>
+          Listening to:{" "}
+          <span className="song"><a href={recentSong.songLink} target="_blank">{recentSong.songName}</a></span>
+        </div>
+      ) : (
+        <div>
+          <span className="music">Not scrobbling.</span>
+        </div>
+      )}
     </div>
   );
 }
