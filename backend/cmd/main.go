@@ -10,6 +10,7 @@ import (
 
 	"github.com/PeteMango/website-v2/pkg/auth"
 	"github.com/PeteMango/website-v2/pkg/definition"
+	"github.com/PeteMango/website-v2/pkg/playing"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,7 +33,7 @@ func main() {
 		spotifyAuthURL := "https://accounts.spotify.com/authorize?" + url.Values{
 			"response_type": {"code"},
 			"client_id":     {clientID},
-			"scope":         {"user-read-private user-read-email user-library-read playlist-read-private"},
+			"scope":         {"user-read-playback-state user-read-private user-read-email user-library-read playlist-read-private"},
 			"redirect_uri":  {redirectURI},
 		}.Encode()
 		c.Redirect(http.StatusFound, spotifyAuthURL)
@@ -48,20 +49,33 @@ func main() {
 			return
 		}
 		refreshToken = newRefreshToken
+		fmt.Printf("THE REFERSH TOKEN IS %s\n", refreshToken)
 
-		playlists, err := get_playlist(accessToken)
+		songName, err := playing.GetCurrentlyPlayingSong(accessToken)
 		if err != nil {
-			c.String(http.StatusInternalServerError, "Error fetching playlists")
+			fmt.Printf("THE ERROR IS: %s", err)
+			c.String(http.StatusInternalServerError, "Error fetching currently playing song")
 			log.Printf("Error: %v", err)
 			return
 		}
-		c.JSON(http.StatusOK, playlists)
 
-		user_playlists = playlists
-		for _, playlist := range user_playlists {
-			fmt.Printf("Playlist Name: %s\n", playlist.Name)
-			fmt.Printf("Playlist ID: %s\n", playlist.ID)
-		}
+		c.JSON(http.StatusOK, gin.H{
+			"currently_playing": songName,
+		})
+
+		// playlists, err := get_playlist(accessToken)
+		// if err != nil {
+		// 	c.String(http.StatusInternalServerError, "Error fetching playlists")
+		// 	log.Printf("Error: %v", err)
+		// 	return
+		// }
+		// c.JSON(http.StatusOK, playlists)
+
+		// user_playlists = playlists
+		// for _, playlist := range user_playlists {
+		// 	fmt.Printf("Playlist Name: %s\n", playlist.Name)
+		// 	fmt.Printf("Playlist ID: %s\n", playlist.ID)
+		// }
 
 	})
 
@@ -90,10 +104,31 @@ func main() {
 
 		c.JSON(http.StatusOK, songs)
 
-		for _, song := range songs {
-			fmt.Printf("%s - %s - %f\n", song.Name, song.Artist, song.Duration)
+		// for _, song := range songs {
+		// 	fmt.Printf("%s - %s - %f\n", song.Name, song.Artist, song.Duration)
+		// }
+
+	})
+
+	r.GET("/playing", func(c *gin.Context) {
+		fmt.Printf("HERE THE REFRESH TOKEN IS: %s\n", refreshToken)
+		accessToken, newRefreshToken, err := auth.RefreshAccessToken(refreshToken)
+		refreshToken = newRefreshToken
+		if err != nil {
+			c.String(http.StatusInternalServerError, "Error refreshing access token")
+			log.Printf("Error: %v", err)
+			return
+		}
+		songName, err := playing.GetCurrentlyPlayingSong(accessToken)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "Error fetching currently playing song")
+			log.Printf("Error: %v", err)
+			return
 		}
 
+		c.JSON(http.StatusOK, gin.H{
+			"currently_playing": songName,
+		})
 	})
 
 	r.Run(":8080")
