@@ -11,6 +11,7 @@ import (
 	"github.com/PeteMango/website-v2/pkg/auth"
 	"github.com/PeteMango/website-v2/pkg/db"
 	"github.com/PeteMango/website-v2/pkg/playing"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +23,10 @@ var (
 )
 
 func main() {
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:3000"} // Add the origin of your React app
 	r := gin.Default()
+	r.Use(cors.New(config))
 	mongoClient := db.InitializeMongo()
 	defer func() {
 		if err := mongoClient.Disconnect(context.Background()); err != nil {
@@ -93,6 +97,20 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{
 			"songName":   songName,
 			"songArtist": songArtist,
+		})
+	})
+
+	r.GET("/recentSong", func(c *gin.Context) {
+		coll := mongoClient.Database("songs").Collection("previous_plays")
+		result, err := db.FetchMostRecentSong(coll)
+
+		if err != nil {
+			fmt.Printf("failed to access db\n")
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"songName":   result["song"],
+			"songArtist": result["artist"],
 		})
 	})
 	r.Run(":8080")
