@@ -1,0 +1,53 @@
+.head {
+    overflow: auto;
+    font-size: large;
+}
+
+.intro {
+    text-shadow: 0 0 3px #CCCCCC, 0 0 3px #BBBBBB;
+}
+
+.github a, .linkedin a, .spotify a , .mail a{
+    text-decoration: none;
+    color: #AAAAAA;
+}
+
+.github a:hover {
+    color: #6E5494;
+    text-shadow: 0 0 1px #6E5494, 0 0 3px #6E5494;
+}
+
+a.github:visited {
+    color: #6E5494;
+    text-shadow: 0 0 1px #6E5494, 0 0 3px #6E5494;
+}
+
+.linkedin a:hover {
+    color: #0077B5;
+    text-shadow: 0 0 1px #0077B5, 0 0 3px #0077B5;
+}
+
+a.linkedin:visited {
+    color: #0077B5;
+    text-shadow: 0 0 1px #0077B5, 0 0 3px #0077B5;
+}
+
+.spotify a:hover {
+    color: #1ED760;
+    text-shadow: 0 0 1px #1ED760, 0 0 3px #1ED760;
+}
+
+a.spotify:visited {
+    color: #1ED760;
+    text-shadow: 0 0 1px #1ED760, 0 0 3px #1ED760;
+}
+
+.mail a:hover {
+    color: #54daff;
+    text-shadow: 0 0 1px #54daff, 0 0 3px #54daff;
+}
+
+a.mail:visited {
+    color: #0078d4;
+    text-shadow: 0 0 1px #54daff, 0 0 3px #54daff;
+}

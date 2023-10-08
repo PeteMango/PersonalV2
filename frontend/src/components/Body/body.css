@@ -1,0 +1,95 @@
+.body {
+    overflow: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: medium;
+    margin-top: 1.5em;
+}
+
+.school a {
+    color: #FFD23F;
+    text-shadow: 0 0 1px #FFD23F, 0 0 3px #FFD23F;
+    text-decoration: none;
+}
+
+.school a:hover {
+    color: #ccaa32;
+    text-decoration: underline;
+}
+
+.blackberry a {
+    color: #1475DC;
+    text-shadow: 0 0 1px #1475DC, 0 0 3px #1475DC;
+    text-decoration: none;
+}
+
+.blackberry a:hover {
+    color: #115ba9;
+    text-decoration: underline;
+}
+
+.watonomous a {
+    color: #35C4E6;
+    text-shadow: 0 0 1px #35C4E6, 0 0 3px #35C4E6;
+    text-decoration: none;
+}
+
+.watonomous a:hover {
+    color: #2ca5c9;
+    text-decoration: underline;
+}
+
+.avril a {
+    color: #42F5C5;
+    text-shadow: 0 0 1px #42F5C5, 0 0 3px #42F5C5;
+    text-decoration: none;
+}
+
+.avril a:hover {
+    color: #36c0a7;
+    text-decoration: underline;
+}
+
+.instagram a {
+    color: #D62976;
+    text-shadow: 0 0 1px #D62976, 0 0 3px #D62976;
+    text-decoration: none;
+}
+
+.instagram a:hover {
+    color: #b02161;
+    text-decoration: underline;
+}
+
+.go a {
+    color: #CD9f61;
+    text-shadow: 0 0 1px #CD9f61, 0 0 3px #CD9f61;
+    text-decoration: none;
+}
+
+.go a:hover {
+    color: #a68352;
+    text-decoration: underline;
+}
+
+.league a {
+    color: #5383E8;
+    text-shadow: 0 0 1px #5383E8, 0 0 3px #5383E8;
+    text-decoration: none;
+}
+
+.league a:hover {
+    color: #426bcc;
+    text-decoration: underline;
+}
+
+span.highlight {
+    text-shadow: 0 0 3px #CCCCCC, 0 0 3px #BBBBBB;
+}
+
+ul {
+    list-style-type: '-> ';
+}
+
+li {
+    margin-top: 1em;
+}
