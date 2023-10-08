@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	clientID     = "ba45f5ea0ffd4ce59ea1a63dc43baf0d"
-	clientSecret = "6c6a3b06bccf449a89fe23e3a5495b80"
+	clientID     = ""
+	clientSecret = ""
 	redirectURI  = "http://localhost:8080/callback"
 	refreshToken string
 )

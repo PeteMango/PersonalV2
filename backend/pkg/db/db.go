@@ -15,7 +15,7 @@ import (
 var client *mongo.Client
 
 func InitializeMongo() *mongo.Client {
-	connectionString := "mongodb+srv://PeteMango:test123@songs.db2njvu.mongodb.net/?retryWrites=true&w=majority"
+	connectionString := ""
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
