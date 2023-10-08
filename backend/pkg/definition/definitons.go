@@ -1,6 +1,9 @@
 package definition
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 var (
 	playlistLimit = 50
@@ -28,6 +31,12 @@ type Song struct {
 
 type UserPlaylist struct {
 	Songs []Song
+}
+
+type Token struct {
+	AccessToken  string    `bson:"access_token"`
+	RefreshToken string    `bson:"refresh_token"`
+	ExpiryTime   time.Time `bson:"expiry_time,omitempty"`
 }
 
 func HandleError(err error) {

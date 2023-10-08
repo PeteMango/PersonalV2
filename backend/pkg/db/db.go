@@ -2,11 +2,11 @@ package db
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log"
 	"time"
 
+	"github.com/PeteMango/website-v2/pkg/definition"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -44,7 +44,8 @@ func InsertSongs(collection *mongo.Collection, songName string, songArtist strin
 	}
 
 	if previousSong != nil && previousSong["song"] == songName && previousSong["artist"] == songArtist {
-		return nil, errors.New("song is already the most recently inserted in the playlist")
+		fmt.Printf("already in the database\n")
+		return nil, nil
 	}
 
 	doc := bson.M{
@@ -63,4 +64,36 @@ func FetchMostRecentSong(collection *mongo.Collection) (bson.M, error) {
 	err := collection.FindOne(context.Background(), bson.M{}, opts).Decode(&result)
 
 	return result, err
+}
+
+func UpsertTokens(collection *mongo.Collection, accessToken, refreshToken string, expiryTime time.Time) error {
+	filter := bson.M{}
+	update := bson.M{
+		"$set": bson.M{
+			"access_token":  accessToken,
+			"refresh_token": refreshToken,
+			"expiry_time":   expiryTime,
+		},
+	}
+
+	_, err := collection.UpdateOne(context.Background(), filter, update, options.Update().SetUpsert(true))
+	return err
+}
+
+func FetchTokens(collection *mongo.Collection) (*definition.Token, time.Time, error) {
+	var token definition.Token
+
+	err := collection.FindOne(context.Background(), bson.M{}).Decode(&token)
+	if err != nil {
+		return nil, time.Time{}, err
+	}
+
+	expiryTime := token.ExpiryTime
+
+	return &token, expiryTime, nil
+}
+
+func DeleteTokens(collection *mongo.Collection) error {
+	_, err := collection.DeleteMany(context.Background(), bson.M{})
+	return err
 }

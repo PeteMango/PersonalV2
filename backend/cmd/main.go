@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/PeteMango/website-v2/pkg/auth"
 	"github.com/PeteMango/website-v2/pkg/db"
@@ -46,16 +47,33 @@ func main() {
 	})
 
 	r.GET("/callback", func(c *gin.Context) {
-		code := c.DefaultQuery("code", "")
+		tokenColl := mongoClient.Database("songs").Collection("tokens")
 
-		accessToken, newRefreshToken, err := auth.ExchangeAccessToken(code)
+		existingToken, expiry, err := db.FetchTokens(tokenColl)
 		if err != nil {
-			c.String(http.StatusInternalServerError, "Error exchanging code for access token")
-			log.Printf("Error: %v", err)
-			return
+			log.Printf("Failed to get tokens: %v", err)
 		}
-		refreshToken = newRefreshToken
-		fmt.Printf("THE REFERSH TOKEN IS %s\n", refreshToken)
+
+		var accessToken string
+		if existingToken != nil && expiry.After(time.Now()) {
+			accessToken = existingToken.AccessToken
+			refreshToken = existingToken.RefreshToken
+		} else {
+			code := c.DefaultQuery("code", "")
+			accessToken, newRefreshToken, err := auth.ExchangeAccessToken(code)
+			if err != nil {
+				c.String(http.StatusInternalServerError, "Error exchanging code for access token")
+				log.Printf("Error: %v", err)
+				return
+			}
+			refreshToken = newRefreshToken
+			fmt.Printf("THE REFRESH TOKEN IS %s\n", refreshToken)
+
+			err = db.UpsertTokens(tokenColl, accessToken, refreshToken, time.Now().Add(5*time.Minute))
+			if err != nil {
+				log.Printf("Failed to upsert tokens: %v", err)
+			}
+		}
 
 		songName, songArtist, err := playing.GetCurrentlyPlayingSong(accessToken)
 		if err != nil {
@@ -74,10 +92,8 @@ func main() {
 
 		c.JSON(http.StatusOK, gin.H{
 			"songName":   songName,
-			"songARtist": songArtist,
+			"songArtist": songArtist,
 		})
-
 	})
-
 	r.Run(":8080")
 }
