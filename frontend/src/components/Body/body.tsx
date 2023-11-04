@@ -56,8 +56,7 @@ function Body() {
           Previously:
           <ul className="list">
             <li>
-              <span className="highlight">systems software developer</span>{" "}
-              intern @{" "}
+              <span className="highlight">systems software developer</span> @{" "}
               <span className="blackberry">
                 <a
                   href="https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.security.system/topic/manual/qcrypto.html"
@@ -68,7 +67,8 @@ function Body() {
               </span>
             </li>
             <li>
-              <span className="highlight"> autonomous software</span> member @{" "}
+              <span className="highlight"> autonomous software developer</span>{" "}
+              @{" "}
               <span className="watonomous">
                 <a href="https://www.watonomous.ca/" target="_blank">
                   WATonmous
