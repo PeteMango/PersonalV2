@@ -11,36 +11,91 @@
     margin-top: 1.5em;
 }
 
-.school a, .blackberry a, .watonomous a, .avril a, .instagram a, .go a, .league a {
+.school a, .blackberry a, .watonomous a, .avril a, .instagram a, .go a, .league a, .windriver a {
     text-shadow: var(--text-shadow);
     text-decoration: var(--text-decoration);
 }
 
-.school a { color: #FFD23F; }
-.school a:hover { color: #ccaa32; text-decoration: var(--hover-text-decoration); }
+.school a {
+    color: #FFD23F;
+}
 
-.blackberry a { color: #1475DC; }
-.blackberry a:hover { color: #115ba9; text-decoration: var(--hover-text-decoration); }
+.school a:hover {
+    color: #ccaa32;
+    text-decoration: var(--hover-text-decoration);
+}
 
-.watonomous a { color: #35C4E6; }
-.watonomous a:hover { color: #2ca5c9; text-decoration: var(--hover-text-decoration); }
+.blackberry a {
+    color: #1475DC;
+}
 
-.avril a { color: #42F5C5; }
-.avril a:hover { color: #36c0a7; text-decoration: var(--hover-text-decoration); }
+.blackberry a:hover {
+    color: #115ba9;
+    text-decoration: var(--hover-text-decoration);
+}
 
-.instagram a { color: #D62976; }
-.instagram a:hover { color: #b02161; text-decoration: var(--hover-text-decoration); }
+.watonomous a {
+    color: #35C4E6;
+}
 
-.go a { color: #CD9f61; }
-.go a:hover { color: #a68352; text-decoration: var(--hover-text-decoration); }
+.watonomous a:hover {
+    color: #2ca5c9;
+    text-decoration: var(--hover-text-decoration);
+}
 
-.league a { color: #5383E8; }
-.league a:hover { color: #426bcc; text-decoration: var(--hover-text-decoration); }
+.avril a {
+    color: #42F5C5;
+}
+
+.windriver a {
+    color: #00ACA3;
+}
+
+.avril a:hover {
+    color: #36c0a7;
+    text-decoration: var(--hover-text-decoration);
+}
+
+.windriver a:hover {
+    color: #027C75;
+    text-decoration: var(--hover-text-decoration);
+}
+
+.instagram a {
+    color: #D62976;
+}
+
+.instagram a:hover {
+    color: #b02161;
+    text-decoration: var(--hover-text-decoration);
+}
+
+.go a {
+    color: #CD9f61;
+}
+
+.go a:hover {
+    color: #a68352;
+    text-decoration: var(--hover-text-decoration);
+}
+
+.league a {
+    color: #5383E8;
+}
+
+.league a:hover {
+    color: #426bcc;
+    text-decoration: var(--hover-text-decoration);
+}
 
 span.highlight {
     text-shadow: var(--text-shadow) #CCC, var(--text-shadow) #BBB;
 }
 
-ul { list-style-type: '-> '; }
+ul {
+    list-style-type: '-> ';
+}
 
-li { margin-top: 1em; }
+li {
+    margin-top: 1em;
+}

@@ -19,6 +19,20 @@ function Body() {
         </div>
         <br />
         <div>
+          Incoming:
+          <ul className="list">
+            <li>
+              <span className="highlight">Software Developer</span> @{" "}
+              <span className="windriver">
+                <a href="https://www.windriver.com/" target="_blank">
+                  Wind River
+                </a>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <br />
+        <div>
           Currently:
           <ul className="list">
             <li>
@@ -45,7 +59,10 @@ function Body() {
               <span className="highlight">systems software developer</span>{" "}
               intern @{" "}
               <span className="blackberry">
-                <a href="https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.security.system/topic/manual/qcrypto.html" target="_blank">
+                <a
+                  href="https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.security.system/topic/manual/qcrypto.html"
+                  target="_blank"
+                >
                   Blackberry
                 </a>
               </span>
@@ -79,7 +96,8 @@ function Body() {
             <a href="https://www.op.gg/summoners/na/petemango" target="_blank">
               play League
             </a>
-          </span>!
+          </span>
+          !
         </div>
         <br />
       </div>
