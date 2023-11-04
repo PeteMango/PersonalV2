@@ -22,7 +22,7 @@ function Body() {
           Incoming:
           <ul className="list">
             <li>
-              <span className="highlight">Software Developer</span> @{" "}
+              <span className="highlight">software developer</span> @{" "}
               <span className="windriver">
                 <a href="https://www.windriver.com/" target="_blank">
                   Wind River
